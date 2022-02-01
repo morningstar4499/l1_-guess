@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
-            android:text="please enter number"
+            android:text="@string/please_enter_number"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <EditText
@@ -32,6 +32,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
-            android:text="Button" />
+            android:text="@string/ok" />
     </LinearLayout>
 </LinearLayout>

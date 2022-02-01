@@ -4,11 +4,16 @@ import kotlin.random.Random
 
 class SecretNumber {
 
-    val secret  = Random(100).nextInt(10)+1
+    var secret  = Random.nextInt(10)+1
     var count =0
     fun validate(number:Int):Int {
         count++
         return number - secret
+    }
+    fun Reset(){
+
+        secret  = Random.nextInt(10)+1
+        count =0
     }
 }
 
