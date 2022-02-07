@@ -1,5 +1,7 @@
 package com.morningstar.l1_guess
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -11,7 +13,7 @@ import kotlinx.android.synthetic.main.content_material.*
 
 class MaterialActivity : AppCompatActivity() {
     val secretnumber = SecretNumber()
-    val Tag = MainActivity::class.java.simpleName
+    val TAG = MainActivity::class.java.simpleName
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -30,7 +32,7 @@ class MaterialActivity : AppCompatActivity() {
                 .setPositiveButton(getString(R.string.ok),{dialog,which->
                     secretnumber.Reset()
                     txv_cnt.setText(secretnumber.count.toString())
-                    Log.d(Tag,"secretnumber="+ secretnumber.secret)
+                    Log.d(TAG,"secretnumber="+ secretnumber.secret)
                     txv_cnt.setText(secretnumber.count.toString() )
                     ed_number.setText("")
 
@@ -38,12 +40,14 @@ class MaterialActivity : AppCompatActivity() {
                 .setNeutralButton("Cancel",null)
                 .show()
         }
+        Log.d(TAG, "onCreate: secretnumber.secret="+secretnumber.secret)
+
 
     }
     fun check(v : View){
 
         val num = ed_number.text.toString().toInt()
-        Log.d(Tag,"number="+ num)
+        Log.d(TAG,"number="+ num)
         val diff:Int =secretnumber.validate(num)
         var  mess= ""
         if(diff < 0){
@@ -52,6 +56,7 @@ class MaterialActivity : AppCompatActivity() {
         else  if (diff > 0){
             mess = getString(R.string.samll)
         }
+        /*
         else if(diff == 0 ){
             if (secretnumber.count <=2 ){
                 mess = getString(R.string.Excellent_The_number_is)+secretnumber.secret.toString()
@@ -61,11 +66,21 @@ class MaterialActivity : AppCompatActivity() {
             }
 
         }
+
+         */
         txv_cnt.setText(secretnumber.count.toString() )
         AlertDialog.Builder(this)
             .setTitle(getString(R.string.AlertDialog_messsage))
             .setMessage(mess)
-            .setPositiveButton(getString(R.string.ok),null)
+            .setPositiveButton(getString(R.string.ok), {dialog,which->
+                if(diff == 0 ){
+                    val intent = Intent(this,RecordActivity::class.java)
+                    intent.putExtra("COUNTER",secretnumber.count)
+                    startActivity(intent)
+
+                }
+
+            } )
             .show()
 
     }
